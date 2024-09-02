@@ -1,3 +1,3 @@
-FROM dmoj/dmoj-base:latest
+FROM oj/dmoj-base:latest
 
 ENTRYPOINT celery -A dmoj_celery worker -l info --concurrency=2
