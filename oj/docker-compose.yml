@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
     db:
-        container_name: dmoj_mysql
+        container_name: oj_mysql
         image: mariadb
         restart: always
         volumes:
@@ -11,7 +11,7 @@ services:
         env_file: [environment/mysql.env, environment/mysql-admin.env]
         networks: [db]
     redis:
-        container_name: dmoj_redis
+        container_name: oj_redis
         image: redis:alpine
         restart: always
         networks: [site]
@@ -19,7 +19,7 @@ services:
         build:
             context: .
             dockerfile: ./texoid/Dockerfile
-        image: oj/dmoj-texoid
+        image: chosunoj/dmoj-texoid
         init: true
         restart: unless-stopped
         networks: [site]
@@ -27,7 +27,7 @@ services:
         build:
             context: .
             dockerfile: ./pdfoid/Dockerfile
-        image: oj/dmoj-pdfoid
+        image: chosunoj/dmoj-pdfoid
         init: true
         restart: unless-stopped
         networks: [site]
@@ -37,7 +37,7 @@ services:
         build:
             context: .
             dockerfile: ./mathoid/Dockerfile
-        image: oj/dmoj-mathoid
+        image: chosunoj/dmoj-mathoid
         init: true
         restart: unless-stopped
         volumes:
@@ -47,13 +47,13 @@ services:
         build:
             context: .
             dockerfile: ./base/Dockerfile
-        image: oj/dmoj-base
+        image: chosunoj/dmoj-base
         network_mode: none
     site:
         build:
             context: .
             dockerfile: ./site/Dockerfile
-        image: oj/dmoj-site
+        image: chosunoj/dmoj-site
         init: true
         restart: unless-stopped
         volumes:
@@ -72,7 +72,7 @@ services:
         build:
             context: .
             dockerfile: ./celery/Dockerfile
-        image: oj/dmoj-celery
+        image: chosunoj/dmoj-celery
         init: true
         restart: unless-stopped
         volumes:
@@ -87,7 +87,7 @@ services:
         build:
             context: .
             dockerfile: ./bridged/Dockerfile
-        image: oj/dmoj-bridged
+        image: chosunoj/dmoj-bridged
         init: true
         restart: unless-stopped
         volumes:
@@ -104,7 +104,7 @@ services:
         build:
             context: .
             dockerfile: ./wsevent/Dockerfile
-        image: oj/dmoj-wsevent
+        image: chosunoj/dmoj-wsevent
         init: true
         restart: unless-stopped
         volumes:
@@ -113,7 +113,7 @@ services:
         env_file: [environment/mysql.env, environment/site.env]
         networks: [site, nginx]
     nginx:
-        container_name: dmoj_nginx
+        container_name: oj_nginx
         image: nginx:alpine
         restart: always
         ports:
