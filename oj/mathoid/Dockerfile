@@ -1,5 +1,7 @@
 FROM node:22
 
+RUN npm install -g npm@6
+
 RUN npm install mathoid && \
     ln -sfv /node_modules/mathoid/app.js /node_modules/app.js
 
