@@ -1,4 +1,4 @@
-FROM dmoj/dmoj-base:latest
+FROM oj/dmoj-base:latest
 
 EXPOSE 8000
 
