@@ -1,8 +1,0 @@
-#!/bin/bash
-cd $(dirname $(dirname $0)) || exit
-
-mkdir problems media
-
-mv ../config.js repo/websocket/
-mv ../local_settings.py repo/dmoj/
-mv ../uwsgi.ini repo/
