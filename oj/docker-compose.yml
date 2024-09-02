@@ -19,7 +19,7 @@ services:
         build:
             context: .
             dockerfile: ./texoid/Dockerfile
-        image: chosunoj/dmoj-texoid
+        image: jxxn/dmoj-texoid
         init: true
         restart: unless-stopped
         networks: [site]
@@ -27,7 +27,7 @@ services:
         build:
             context: .
             dockerfile: ./pdfoid/Dockerfile
-        image: chosunoj/dmoj-pdfoid
+        image: jxxn/dmoj-pdfoid
         init: true
         restart: unless-stopped
         networks: [site]
@@ -37,7 +37,7 @@ services:
         build:
             context: .
             dockerfile: ./mathoid/Dockerfile
-        image: chosunoj/dmoj-mathoid
+        image: jxxn/dmoj-mathoid
         init: true
         restart: unless-stopped
         volumes:
@@ -47,13 +47,13 @@ services:
         build:
             context: .
             dockerfile: ./base/Dockerfile
-        image: chosunoj/dmoj-base
+        image: jxxn/dmoj-base
         network_mode: none
     site:
         build:
             context: .
             dockerfile: ./site/Dockerfile
-        image: chosunoj/dmoj-site
+        image: jxxn/dmoj-site
         init: true
         restart: unless-stopped
         volumes:
@@ -72,7 +72,7 @@ services:
         build:
             context: .
             dockerfile: ./celery/Dockerfile
-        image: chosunoj/dmoj-celery
+        image: jxxn/dmoj-celery
         init: true
         restart: unless-stopped
         volumes:
@@ -87,7 +87,7 @@ services:
         build:
             context: .
             dockerfile: ./bridged/Dockerfile
-        image: chosunoj/dmoj-bridged
+        image: jxxn/dmoj-bridged
         init: true
         restart: unless-stopped
         volumes:
@@ -104,7 +104,7 @@ services:
         build:
             context: .
             dockerfile: ./wsevent/Dockerfile
-        image: chosunoj/dmoj-wsevent
+        image: jxxn/dmoj-wsevent
         init: true
         restart: unless-stopped
         volumes:
