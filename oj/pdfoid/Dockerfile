@@ -10,9 +10,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         google-chrome-stable fonts-noto ttf-mscorefonts-installer && \
     rm -rf /var/lib/apt/lists/* && \
-    wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/118.0.5993.70/linux64/chromedriver-linux64.zip && \
+    wget https://storage.googleapis.com/chrome-for-testing-public/128.0.6534.0/linux64/chromedriver-linux64.zip && \
     unzip chromedriver-linux64.zip && \
-    mv chromedriver /usr/bin/chromedriver && \
+    mv ./chromedriver-linux64/chromedriver /usr/bin/chromedriver && \
     chmod +x /usr/bin/chromedriver && \
     rm chromedriver-linux64.zip && \
     useradd -m pdfoid
