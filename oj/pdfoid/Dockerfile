@@ -2,13 +2,12 @@ FROM python:3.12-slim-bookworm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        curl gnupg git unzip xvfb libxi6 libgconf-2-4 exiftool && \
+        curl gnupg git unzip xvfb libxi6 libgconf-2-4 exiftool fontconfig fonts-noto-cjk fonts-liberation && \
     curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add && \
-    echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
     sed -i 's/^Components: main$/& contrib non-free/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
-    apt-get install -y --no-install-recommends \
-        google-chrome-stable fonts-noto ttf-mscorefonts-installer && \
+    apt-get install -y --no-install-recommends google-chrome-stable && \
     rm -rf /var/lib/apt/lists/* && \
     wget https://storage.googleapis.com/chrome-for-testing-public/128.0.6534.0/linux64/chromedriver-linux64.zip && \
     unzip chromedriver-linux64.zip && \
@@ -16,6 +15,8 @@ RUN apt-get update && \
     chmod +x /usr/bin/chromedriver && \
     rm chromedriver-linux64.zip && \
     useradd -m pdfoid
+
+RUN fc-cache -fv
 
 RUN git clone https://github.com/DMOJ/pdfoid.git pdfoid
 WORKDIR /pdfoid/
@@ -31,3 +32,4 @@ ENV CHROME_PATH=/usr/bin/google-chrome-stable
 EXPOSE 8888
 USER pdfoid
 ENTRYPOINT pdfoid --address=pdfoid --port=8888
+
