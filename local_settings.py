@@ -108,6 +108,7 @@ STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
 ADMINS = ()
 
 # The sender for the aforementioned emails.
+# 필요 시 수정
 SERVER_EMAIL = 'OJ: Online Judge <errors@dmoj.ca>'
 
 
