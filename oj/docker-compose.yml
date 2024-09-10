@@ -7,18 +7,14 @@ services:
         restart: always
         volumes:
             - ./database/:/var/lib/mysql/
-            # - ./databse/settings/:/etc/mysql/ # 외부 접속이 직접적으로 필요한 경우 파일 수정
-        env_file:
-            - environment/mysql.env
-            - environment/mysql-admin.env
-        networks:
-            - db
+            # - ./databse/settings/:/etc/mysql/
+        env_file: [environment/mysql.env, environment/mysql-admin.env]
+        networks: [db]
     redis:
         container_name: oj_redis
         image: redis:alpine
         restart: always
-        networks:
-            - site
+        networks: [site]
     texoid:
         build:
             context: .
@@ -26,8 +22,7 @@ services:
         image: jxxn/dmoj-texoid
         init: true
         restart: unless-stopped
-        networks:
-            - site
+        networks: [site]
     pdfoid:
         build:
             context: .
@@ -35,8 +30,7 @@ services:
         image: jxxn/dmoj-pdfoid
         init: true
         restart: unless-stopped
-        networks:
-            - site
+        networks: [site]
         cap_add:
             - SYS_ADMIN
     mathoid:
@@ -48,8 +42,7 @@ services:
         restart: unless-stopped
         volumes:
             - ./mathoid/config.yaml:/node_modules/mathoid/config.yaml
-        networks:
-            - site
+        networks: [site]
     base:
         build:
             context: .
@@ -72,17 +65,9 @@ services:
             - ./problems/:/problems/
             - ./repo/:/site/
         working_dir: /site/
-        env_file:
-            - environment/mysql.env
-            - environment/site.env
-        networks:
-            - site
-            - nginx
-            - db
-        depends_on:
-            - base
-            - db
-            - redis
+        env_file: [environment/mysql.env, environment/site.env]
+        networks: [site, nginx, db]
+        depends_on: [base, db, redis]
     celery:
         build:
             context: .
@@ -95,16 +80,9 @@ services:
             - datacache:/datacache/
             - ./repo/:/site/
         working_dir: /site/
-        env_file:
-            - environment/mysql.env
-            - environment/site.env
-        networks:
-            - site
-            - db
-        depends_on:
-            - base
-            - db
-            - redis
+        env_file: [environment/mysql.env, environment/site.env]
+        networks: [site, db]
+        depends_on: [base, db, redis]
     bridged:
         build:
             context: .
@@ -117,19 +95,11 @@ services:
             - ./problems/:/problems/
             - ./repo/:/site/
         working_dir: /site/
-        env_file:
-            - environment/mysql.env
-            - environment/site.env
-        networks:
-            - site
-            - nginx
-            - db
+        env_file: [environment/mysql.env, environment/site.env]
+        networks: [site, nginx, db]
         ports:
             - 9999:9999
-        depends_on:
-            - base
-            - db
-            - redis
+        depends_on: [base, db, redis]
     wsevent:
         build:
             context: .
@@ -140,12 +110,8 @@ services:
         volumes:
             - ./repo/:/app/site/
         working_dir: /app/site
-        env_file:
-            - environment/mysql.env
-            - environment/site.env
-        networks:
-            - site
-            - nginx
+        env_file: [environment/mysql.env, environment/site.env]
+        networks: [site, nginx]
     nginx:
         container_name: oj_nginx
         image: nginx:alpine
@@ -159,11 +125,8 @@ services:
             - cache:/cache/
             - ./media/:/media/
             - ./nginx/conf.d/:/etc/nginx/conf.d/
-        networks:
-            - nginx
-        depends_on:
-            - site
-            - wsevent
+        networks: [nginx]
+        depends_on: [site, wsevent]
 networks:
     site:
     db:
