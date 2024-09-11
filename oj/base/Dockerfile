@@ -16,4 +16,6 @@ RUN pip3 install \
         pymysql mysqlclient websocket-client uwsgi django-redis redis
 
 COPY repo/requirements.txt .
+
+RUN apt update
 RUN pip3 install -r requirements.txt
